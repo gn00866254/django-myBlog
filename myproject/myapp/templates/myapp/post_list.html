@@ -1,0 +1,38 @@
+<style>
+    #post_list_table {
+        font: 16px Arial,Sans-serif;
+    }
+</style>
+
+{% extends 'myapp/base.html'%}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <br>
+        <h2>投稿一覧</h2>
+        <br>
+        <table id="post_list_table" class="table">
+            <thead>
+                <tr>
+                    <th>日付</th>
+                    <th>タイトル</th>
+                    <th>内容</th>
+                    <th>更新日時</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in post_list %}
+                <tr>
+                    <td>{{ item.created_at }}</td>
+                    <td><a href="{% url 'myapp:post_detail' item.pk %}">{{ item.title }}</a></td>
+                    <td>{{ item.content }}</td>
+                    <td>{{ item.updated_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

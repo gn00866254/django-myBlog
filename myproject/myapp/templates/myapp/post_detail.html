@@ -1,0 +1,48 @@
+{% extends 'myapp/base.html'%}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <!-- card -->
+        <br>
+        <div class="card">
+            {% if object.thumbnail %}
+            <img src="{{ object.thumbnail.url }}" class="card-img-top"
+                alt="{{object.title}}" />
+            {% else %}
+            <img src="#" class="card-img-top"
+                alt="{{object.title}}" />
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ object.title }}</h5>
+                <p class="card-text">{{ object.content | linebreaksbr }}</p>
+                <!-- button -->
+                <a class="btn" href="{% url 'myapp:like_add' object.pk %}" style="background-color:#FF6699; color:white;">
+                    お気に入り
+                </a>
+                <hr>
+                <a href="{% url 'myapp:post_update' object.id %}" class="btn btn-primary">更新</a>
+                <a href="{% url 'myapp:post_delete' object.id %}" class="btn btn-danger">削除</a>
+            </div>
+        </div>
+        <!-- card -->
+        <br>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ object.category }}</h5>
+                <p>関連記事</p>
+            </div>
+            <ul class="list-group">
+                {% for item in category_posts %}
+                <li class="list-group-item">
+                    <a href="{% url 'myapp:post_detail' item.id %}">{{ item.title | truncatechars:20 }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

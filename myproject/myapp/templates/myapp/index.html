@@ -1,0 +1,42 @@
+{% extends 'myapp/base.html'%}
+
+{% block content %}
+<!-- Start your project here-->
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">My blog</h1>
+    <p class="lead">This is a my first blog</p>
+  </div>
+</div>
+<!--card deck-->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+  {% for item in post_list %}
+
+  <div class="col">
+    <div class="card h-100">
+      <!-- thumbnail -->
+      {% if item.thumbnail %}
+      <img src="{{ item.thumbnail.url }}" class="card-img-top" alt="{{ item.title }}" />
+      {% else %}
+      <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp" class="card-img-top" alt="{{ item.title }}"/>
+      {% endif %}
+      <div class="card-body">
+        <!-- titlt -->
+        <h5 class="card-title">{{ item.title }}</h5>
+        <p>{{ item.category }}</p>
+        <!-- content -->
+        <p class="card-text">
+          {{ item.content | truncatechars:50 | linebreaksbr}}
+        </p>
+      </div>
+      <div class="card-footer">
+        <a href="{% url 'myapp:post_detail' item.id %}" type="button" class="btn btn-info">もっと読む</a>
+      </div>
+      
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<!-- End your project here-->
+{% endblock %}
